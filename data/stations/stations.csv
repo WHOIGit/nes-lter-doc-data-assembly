@@ -1,0 +1,26 @@
+long_name,name,latitude,longitude,depth,comments
+LTER1,L1,41.1967,-70.8833,21.0,
+LTER2,L2,41.03,-70.8833,47.0,
+LTER3,L3,40.8633,-70.8833,56.0,
+LTER4,L4,40.6967,-70.8833,66.0,
+LTER5,L5,40.5133,-70.8833,75.0,Nudged south to avoid shipping channel
+LTER6,L6,40.3633,-70.8833,95.0,OOI Inshore (IS)
+LTER7,L7,40.2267,-70.8833,129.0,OOI Central Inshore (CI)
+LTER8,L8,40.1367,-70.775,137.0,OOI Central (CN)
+LTER9,L9,40.0983,-70.8833,150.0,OOI Central Offshore (CO)
+LTER9.5,L9.5,40.0192,-70.8833,254.0,depth used from EN649
+LTER10,L10,39.94,-70.8833,462.0,OOI Offshore (OS)
+LTER10.5,L10.5,39.8567,-70.8833,,
+LTER11,L11,39.7733,-70.8833,1604.0,Upper slope
+LTER12,L12,39.94,-70.775,465.0,OOI Upstream Offshore (UO)
+upstream2a,u2a,41.03,-70.7725,47.0,
+downstream2a ,d2a,41.03,-70.9942,42.0,
+upstream4a,u4a,40.6967,-70.7733,64.0,
+downstream4a,d4a,40.6967,-70.9933,62.0,
+upstream6a,u6a,40.3633,-70.7742,93.0,
+downstream6a,d6a,40.3633,-70.9925,90.0,
+upstream9a,u9a,40.0983,-70.7742,137.0,
+downstream9a,d9a,40.0983,-70.9925,166.0,
+upstream11a,u11a,39.7733,-70.775,1772.0,
+downstream11a,d11a,39.7733,-70.9917,1629.0,
+Martha's Vineyard Coastal Observatory,MVCO,41.325,-70.5667,17.0,

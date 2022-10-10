@@ -39,6 +39,13 @@ retain_columns = [
 
 doc = doc[retain_columns]
 
+doc = doc.rename(columns={
+    'date run': 'date_run',
+    'npoc(um)': 'npoc',
+    'tn(um)': 'tn',
+    'cast type': 'cast_type',
+})
+
 doc.latitude = doc.latitude.astype(float)
 doc.longitude = doc.longitude.astype(float)
 
@@ -48,8 +55,8 @@ nearest_station = station_locator.nearest_station(doc)
 doc = doc.merge(nearest_station, left_index=True, right_index=True)
 
 doc['distance_km'] = [f'{v:.3f}' for v in doc['distance_km']]
-doc['npoc(um)'] = [f'{v:.1f}' for v in doc['npoc(um)'].astype(float)]
-doc['tn(um)'] = [f'{v:.1f}' for v in doc['tn(um)'].astype('float')]
+doc['npoc'] = [f'{v:.1f}' for v in doc['npoc'].astype(float)]
+doc['tn'] = [f'{v:.1f}' for v in doc['tn'].astype('float')]
 
 doc['depth'] = [f'{v:.3f}' for v in doc['depth'].astype(float)]
 

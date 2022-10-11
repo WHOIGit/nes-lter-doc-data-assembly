@@ -65,8 +65,6 @@ doc['depth'] = [f'{v:.3f}' for v in doc['depth'].astype(float)]
 for col in ['latitude', 'longitude']:
     doc[col] = [f'{v:.4f}' for v in doc[col].astype(float)]
 
-doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
-
 doc['sample_type'] = doc['sample_type'].str.replace('C','cast')
 
 doc['quality_flag'] = 1

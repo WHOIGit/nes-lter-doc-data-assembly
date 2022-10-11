@@ -40,10 +40,10 @@ retain_columns = [
 doc = doc[retain_columns]
 
 doc = doc.rename(columns={
-    'date run': 'date_run',
+    'date run': 'date_analyzed',
     'npoc(um)': 'npoc',
     'tn(um)': 'tn',
-    'cast type': 'cast_type',
+    'cast type': 'sample_type',
 })
 
 doc.latitude = doc.latitude.astype(float)
@@ -55,6 +55,8 @@ nearest_station = station_locator.nearest_station(doc)
 doc = doc.merge(nearest_station, left_index=True, right_index=True)
 
 doc['distance_km'] = [f'{v:.3f}' for v in doc['distance_km']]
+doc.rename(columns={'distance_km':'station_distance'}, inplace=True)
+
 doc['npoc'] = [f'{v:.1f}' for v in doc['npoc'].astype(float)]
 doc['tn'] = [f'{v:.1f}' for v in doc['tn'].astype('float')]
 
@@ -64,5 +66,17 @@ for col in ['latitude', 'longitude']:
     doc[col] = [f'{v:.4f}' for v in doc[col].astype(float)]
 
 doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
+
+doc['sample_type'] = doc['sample_type'].str.replace('C','cast')
+
+doc['quality_flag'] = 1
+
+column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',
+               'sample_type', 'replicate', 'npoc', 'tn', 'quality_flag', 'date_analyzed',
+               'filename', 'nearest_station', 'station_distance']
+
+doc = doc[column_order]
+
+doc.fillna('nan', inplace=True)
 
 doc.to_csv(os.path.join(DATA_DIR, 'output', 'nes-lter-doc-transect.csv'), index=None)

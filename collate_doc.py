@@ -34,8 +34,9 @@ doc = doc_table.merge(bottle_table, on=['cruise','cast','niskin'], how='left')
 doc.rename(columns={'depsm': 'depth'}, inplace=True)
 
 retain_columns = [
-    'cruise', 'cast type', 'cast', 'niskin', 'replicate', 'date run', 'filename',
-    'npoc(um)', 'tn(um)', 'date', 'latitude', 'longitude', 'depth']
+    'cruise', 'sample_type', 'cast', 'niskin', 'replicate', 'date run',
+    'filename', 'npoc(um)', 'tn(um)', 'date', 'latitude', 'longitude', 'depth'
+]
 
 doc = doc[retain_columns]
 
@@ -43,7 +44,6 @@ doc = doc.rename(columns={
     'date run': 'date_analyzed',
     'npoc(um)': 'npoc',
     'tn(um)': 'tn',
-    'cast type': 'sample_type',
 })
 
 doc.latitude = doc.latitude.astype(float)

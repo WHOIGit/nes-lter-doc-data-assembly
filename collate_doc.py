@@ -42,8 +42,8 @@ doc = doc[retain_columns]
 
 doc = doc.rename(columns={
     'date run': 'date_analyzed',
-    'npoc(um)': 'npoc',
-    'tn(um)': 'tn',
+    'npoc(um)': 'doc',
+    'tn(um)': 'dtn',
 })
 
 doc.latitude = doc.latitude.astype(float)
@@ -57,22 +57,26 @@ doc = doc.merge(nearest_station, left_index=True, right_index=True)
 doc['distance_km'] = [f'{v:.3f}' for v in doc['distance_km']]
 doc.rename(columns={'distance_km':'station_distance'}, inplace=True)
 
-doc['npoc'] = [f'{v:.1f}' for v in doc['npoc'].astype(float)]
-doc['tn'] = [f'{v:.1f}' for v in doc['tn'].astype('float')]
+doc['doc'] = [f'{v:.1f}' for v in doc['doc'].astype(float)]
+doc['dtn'] = [f'{v:.1f}' for v in doc['dtn'].astype('float')]
 
 doc['depth'] = [f'{v:.3f}' for v in doc['depth'].astype(float)]
 
 for col in ['latitude', 'longitude']:
     doc[col] = [f'{v:.4f}' for v in doc[col].astype(float)]
 
-doc['sample_type'] = doc['sample_type'].str.replace('C','cast')
+# doc['sample_type'] = doc['sample_type'].str.replace('C','cast')
+doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
 
 doc['quality_flag'] = 1
 
 column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',
-               'sample_type', 'replicate', 'npoc', 'tn', 'quality_flag', 'date_analyzed',
-               'filename', 'nearest_station', 'station_distance']
+               'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag',
+               'nearest_station', 'station_distance',  'date_analyzed', 'filename']
 
+for c in column_order:
+    print(c)
+    
 doc = doc[column_order]
 
 doc.fillna('nan', inplace=True)

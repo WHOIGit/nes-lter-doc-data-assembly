@@ -68,6 +68,10 @@ for col in ['latitude', 'longitude']:
 # doc['sample_type'] = doc['sample_type'].str.replace('C','cast')
 doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
 
+# remove spurious single quotes from filenames
+
+doc['filename'] = doc['filename'].str.replace(r'\'','')
+
 doc['quality_flag'] = 1
 
 column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',

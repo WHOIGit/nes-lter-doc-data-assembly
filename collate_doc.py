@@ -1,6 +1,7 @@
 import os
 
 import pandas as pd
+from pandas.api.types import CategoricalDtype
 
 from stations import StationLocator
 
@@ -12,7 +13,8 @@ for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
     abspath = os.path.join(DATA_DIR, 'input', fn)
     if not abspath.endswith('.xlsx'):
         continue 
-    dfs.append(pd.read_excel(abspath, dtype=object))
+    df = pd.read_excel(abspath, dtype=object)
+    dfs.append(df)
 
 doc_table = pd.concat(dfs)
 doc_table.columns = [c.lower() for c in doc_table.columns]
@@ -78,11 +80,15 @@ column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'de
                'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag',
                'nearest_station', 'station_distance',  'date_analyzed', 'filename']
 
-for c in column_order:
-    print(c)
-    
 doc = doc[column_order]
 
-doc.fillna('nan', inplace=True)
+cruise_dtype = CategoricalDtype(categories=[c.upper() for c in CRUISES], ordered=True)
+doc['cruise'] = doc['cruise'].astype(cruise_dtype)
+print(doc['cruise'])
+
+doc = doc.sort_values(['cruise','date'])
+
+for col in ['date','nearest_station']:
+    doc[col].fillna('nan', inplace=True)
 
 doc.to_csv(os.path.join(DATA_DIR, 'output', 'nes-lter-doc-transect.csv'), index=None)

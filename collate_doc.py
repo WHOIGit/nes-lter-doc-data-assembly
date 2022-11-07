@@ -72,7 +72,7 @@ doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
 
 # remove spurious single quotes from filenames
 
-doc['filename'] = doc['filename'].str.replace(r'\'','')
+doc['filename'] = doc['filename'].str.replace(r'\'','',regex=False)
 
 doc['quality_flag'] = 1
 
@@ -84,7 +84,6 @@ doc = doc[column_order]
 
 cruise_dtype = CategoricalDtype(categories=[c.upper() for c in CRUISES], ordered=True)
 doc['cruise'] = doc['cruise'].astype(cruise_dtype)
-print(doc['cruise'])
 
 doc = doc.sort_values(['cruise','date'])
 

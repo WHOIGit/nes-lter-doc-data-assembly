@@ -6,7 +6,7 @@ from pandas.api.types import CategoricalDtype
 from stations import StationLocator
 
 DATA_DIR=r'data'
-CRUISES=['at46', 'ar66b', 'en687']
+CRUISES=['at46', 'ar66b', 'en687', 'en695', 'hrs2303', 'en706', 'ar77']
 
 dfs = []
 for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
@@ -19,10 +19,16 @@ for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
 doc_table = pd.concat(dfs)
 doc_table.columns = [c.lower() for c in doc_table.columns]
 
+# replace "HRS2302" with "HRS2303" in cruise column
+doc_table['cruise'] = doc_table['cruise'].str.replace('HRS2302', 'HRS2303')
+
 dfs = []
 for cruise in CRUISES:
     abspath = os.path.join(DATA_DIR, 'bottle_files', f'{cruise}_ctd_bottles.csv')
-    dfs.append(pd.read_csv(abspath, dtype=object))
+    df = pd.read_csv(abspath, dtype=object)
+    # strip leading zeros from 'cast' column
+    df['cast'] = df['cast'].str.replace(r'^0+','',regex=True)
+    dfs.append(df)
 
 bottle_table = pd.concat(dfs)
 retain_columns = ['date', 'cruise','cast','niskin','latitude','longitude', 'depsm']

@@ -43,7 +43,7 @@ doc.rename(columns={'depsm': 'depth'}, inplace=True)
 
 retain_columns = [
     'cruise', 'sample_type', 'cast', 'niskin', 'replicate', 'date run',
-    'filename', 'npoc(um)', 'tn(um)', 'date', 'latitude', 'longitude', 'depth'
+    'filename', 'npoc(um)', 'tn(um)', 'quality_flag_c','quality_flag_n', 'date', 'latitude', 'longitude', 'depth'
 ]
 
 doc = doc[retain_columns]
@@ -80,10 +80,10 @@ doc['date'] = doc['date'].str.replace('+00:00','',regex=False)
 
 doc['filename'] = doc['filename'].str.replace(r'\'','',regex=False)
 
-doc['quality_flag'] = 1
+#doc['quality_flag'] = 1
 
 column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',
-               'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag',
+               'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag_c','quality_flag_n',
                'nearest_station', 'station_distance',  'date_analyzed', 'filename']
 
 doc = doc[column_order]

@@ -19,9 +19,6 @@ for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
 doc_table = pd.concat(dfs)
 doc_table.columns = [c.lower() for c in doc_table.columns]
 
-# replace "HRS2302" with "HRS2303" in cruise column
-doc_table['cruise'] = doc_table['cruise'].str.replace('HRS2302', 'HRS2303')
-
 dfs = []
 for cruise in CRUISES:
     abspath = os.path.join(DATA_DIR, 'bottle_files', f'{cruise}_ctd_bottles.csv')
@@ -43,7 +40,7 @@ doc.rename(columns={'depsm': 'depth'}, inplace=True)
 
 retain_columns = [
     'cruise', 'sample_type', 'cast', 'niskin', 'replicate', 'date run',
-    'filename', 'npoc(um)', 'tn(um)', 'quality_flag_c','quality_flag_n', 'date', 'latitude', 'longitude', 'depth'
+    'filename', 'npoc(um)', 'tn(um)', 'quality_flag_c','quality_flag_n', 'date', 'latitude', 'longitude', 'depth', 'comments'
 ]
 
 doc = doc[retain_columns]
@@ -84,7 +81,7 @@ doc['filename'] = doc['filename'].str.replace(r'\'','',regex=False)
 
 column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',
                'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag_c','quality_flag_n',
-               'nearest_station', 'station_distance',  'date_analyzed', 'filename']
+               'nearest_station', 'station_distance',  'date_analyzed', 'filename','comments']
 
 doc = doc[column_order]
 

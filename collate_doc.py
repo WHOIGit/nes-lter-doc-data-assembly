@@ -28,7 +28,7 @@ for cruise in CRUISES:
     dfs.append(df)
 
 bottle_table = pd.concat(dfs)
-retain_columns = ['date', 'cruise','cast','niskin','latitude','longitude', 'depsm']
+retain_columns = ['date', 'cruise','cast','niskin','latitude','longitude', 'depsm', 'sal00', 't090c']
 bottle_table = bottle_table[retain_columns]
 
 doc_table = doc_table.astype(str)
@@ -40,7 +40,7 @@ doc.rename(columns={'depsm': 'depth'}, inplace=True)
 
 retain_columns = [
     'cruise', 'sample_type', 'cast', 'niskin', 'replicate', 'date run',
-    'filename', 'npoc(um)', 'tn(um)', 'quality_flag_c','quality_flag_n', 'date', 'latitude', 'longitude', 'depth', 'comments'
+    'filename', 'npoc(um)', 'tn(um)', 'sal00', 't090c', 'quality_flag_c','quality_flag_n', 'date', 'latitude', 'longitude', 'depth', 'comments'
 ]
 
 doc = doc[retain_columns]
@@ -49,6 +49,8 @@ doc = doc.rename(columns={
     'date run': 'date_analyzed',
     'npoc(um)': 'doc',
     'tn(um)': 'dtn',
+    'sal00': 'salinity',
+    't090c': 'temperature'
 })
 
 doc.latitude = doc.latitude.astype(float)
@@ -80,7 +82,7 @@ doc['filename'] = doc['filename'].str.replace(r'\'','',regex=False)
 #doc['quality_flag'] = 1
 
 column_order = ['cruise', 'cast', 'niskin', 'date', 'latitude', 'longitude', 'depth',
-               'sample_type', 'replicate', 'doc', 'dtn', 'quality_flag_c','quality_flag_n',
+               'sample_type', 'replicate', 'doc', 'dtn', 'temperature', 'salinity', 'quality_flag_c','quality_flag_n',
                'nearest_station', 'station_distance',  'date_analyzed', 'filename','comments']
 
 doc = doc[column_order]

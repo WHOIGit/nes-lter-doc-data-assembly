@@ -1,12 +1,13 @@
 import os
-
+import numpy as np
 import pandas as pd
 from pandas.api.types import CategoricalDtype
 
 from stations import StationLocator
 
 DATA_DIR=r'data'
-CRUISES=['at46', 'ar66b', 'en687', 'en695', 'hrs2303', 'en706', 'ar77','EN712']
+CRUISES=['at46', 'ar66b', 'en687', 'en695', 'hrs2303', 'en706', 'ar77','EN712', 'EN715', \
+         'EN720', 'EN727', 'AE2426']
 
 dfs = []
 for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
@@ -93,6 +94,9 @@ doc['cruise'] = doc['cruise'].astype(cruise_dtype)
 doc = doc.sort_values(['cruise','date'])
 
 for col in ['date','nearest_station']:
-    doc[col].fillna('nan', inplace=True)
+    doc[col] = doc[col].fillna('nan')
+
+# drop rows picked up by merging extra rows at end of doc files
+doc = doc[doc['cast'] != 'nan']
 
 doc.to_csv(os.path.join(DATA_DIR, 'output', 'nes-lter-doc-transect.csv'), index=None)

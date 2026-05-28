@@ -6,8 +6,25 @@ from pandas.api.types import CategoricalDtype
 from stations import StationLocator
 
 DATA_DIR=r'data'
-CRUISES=['at46', 'ar66b', 'en687', 'en695', 'hrs2303', 'en706', 'ar77','EN712', 'EN715', \
-         'EN720', 'EN727', 'AE2426']
+CRUISES = [
+    "ae2426",
+    "ar66b",
+    "ar77",
+    "ar88",
+    "ar92",
+    "ar95",
+    "ar99",
+    "at46",
+    "en687",
+    "en695",
+    "en706",
+    "en712",
+    "en715",
+    "en720",
+    "en727",
+    "hrs2303",
+    "hrs2601",
+]
 
 dfs = []
 for fn in os.listdir(os.path.join(DATA_DIR, 'input')):

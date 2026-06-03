@@ -6,8 +6,14 @@ from pandas.api.types import CategoricalDtype
 from stations import StationLocator
 
 DATA_DIR=r'data'
-CRUISES=['at46', 'ar66b', 'en687', 'en695', 'hrs2303', 'en706', 'ar77','EN712', 'EN715', \
-         'EN720', 'EN727', 'AE2426']
+BOTTLE_FILE_SUFFIX = '_ctd_bottles.csv'
+
+# derive the list of cruises from the bottle_files directory
+CRUISES = sorted(
+    fn[:-len(BOTTLE_FILE_SUFFIX)]
+    for fn in os.listdir(os.path.join(DATA_DIR, 'bottle_files'))
+    if fn.endswith(BOTTLE_FILE_SUFFIX)
+)
 
 dfs = []
 for fn in os.listdir(os.path.join(DATA_DIR, 'input')):
@@ -22,7 +28,7 @@ doc_table.columns = [c.lower() for c in doc_table.columns]
 
 dfs = []
 for cruise in CRUISES:
-    abspath = os.path.join(DATA_DIR, 'bottle_files', f'{cruise}_ctd_bottles.csv')
+    abspath = os.path.join(DATA_DIR, 'bottle_files', f'{cruise}{BOTTLE_FILE_SUFFIX}')
     df = pd.read_csv(abspath, dtype=object)
     # strip leading zeros from 'cast' column
     df['cast'] = df['cast'].str.replace(r'^0+','',regex=True)
